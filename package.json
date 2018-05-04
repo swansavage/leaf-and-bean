@@ -1,0 +1,31 @@
+{
+  "name": "leaf-and-bean",
+  "version": "1.0.0",
+  "description": "Leaf and Bean e-Commerce app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "cd backend && nodemon server.js",
+    "start:client": "cd client && yarn start",
+    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swansavage/leaf-and-bean.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swansavage/leaf-and-bean/issues"
+  },
+  "homepage": "https://github.com/swansavage/leaf-and-bean#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.17",
+    "morgan": "^1.9.0"
+  }
+}
