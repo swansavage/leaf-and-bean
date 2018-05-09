@@ -8,12 +8,37 @@ router.get('/', (req, res) => {
   Product.find({}, (err, allProducts)=>{
 
       res.json(allProducts);
-  })
+  });
+});
+
+// Create Route - POST new product
+router.post('/', (req,res) => {
+    Product.create(req.body, (err, createdProduct) => {
+        res.json(createdProduct);
+    });
+});
+
+// Update Route - PUT
+router.put('/:id', (req, res) => {
+    Product.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedProduct) => {
+        res.json(updatedProduct);
+    });
 });
 
 
+// DELETE Route
+router.delete('/:id', (req,res) => {
+    Product.findByIdAndRemove(req.params.id, (err, deleteProduct) =>{
+        res.json(deleteProduct)
+    });
+});
 
-
+// Show Route
+router.get('/:id', (req,res) => {
+    Product.findById(req.params.id, (err, foundProduct) => {
+        res.json(foundProduct)
+    });
+});
 
 // Seed Route
 router.get('/seed', (req,res)=> {
