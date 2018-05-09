@@ -7,6 +7,9 @@ class App extends Component {
 
   componentDidMount() {
 
+     fetch('/api/products/seed')
+        .then(res => res.json())
+
 
     fetch('/api/products')
       .then(res => res.json())
