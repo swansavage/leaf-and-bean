@@ -6,7 +6,6 @@ const Product = require('../models/products')
 // Index Route - GET all products
 router.get('/', (req, res) => {
   Product.find({}, (err, allProducts)=>{
-
       res.json(allProducts);
   });
 });
@@ -33,15 +32,11 @@ router.delete('/:id', (req,res) => {
     });
 });
 
-// Show Route
-router.get('/:id', (req,res) => {
-    Product.findById(req.params.id, (err, foundProduct) => {
-        res.json(foundProduct)
-    });
-});
+
 
 // Seed Route
 router.get('/seed', (req,res)=> {
+    console.log('...about to create');
   Product.create([
 		{
 			name: "Black Tea - Looseleaf",
@@ -99,7 +94,15 @@ router.get('/seed', (req,res)=> {
 	  }
 	], (err, data)=> {
     res.json(data)
+    console.log('created');
   })
+});
+
+// Show Route
+router.get('/:id', (req,res) => {
+    Product.findById(req.params.id, (err, foundProduct) => {
+        res.json(foundProduct)
+    });
 });
 
 module.exports = router;
