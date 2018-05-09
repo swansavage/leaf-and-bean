@@ -19,8 +19,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 app.use('/', indexController);
-app.use('/users', usersController);
+app.use('/api/users', usersController);
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=> {
@@ -38,4 +41,9 @@ app.use((err, req, res, next)=> {
   res.render('error');
 });
 
+
+const port = process.env.PORT || 3001;
+app.listen(port);
+
+console.log(`leaf-and-bean listening on ${port}`);
 module.exports = app;
