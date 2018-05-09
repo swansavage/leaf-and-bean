@@ -1,5 +1,6 @@
 {
-    "name": "backend",
+    "name": "leaf-and-bean",
+    "main": "server.js",
     "version": "0.0.0",
     "private": true,
     "scripts": {
