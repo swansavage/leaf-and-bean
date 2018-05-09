@@ -3,20 +3,20 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  state = {users: []}
+  state = {products: []}
 
   componentDidMount() {
-    fetch('/api/users')
+    fetch('/api/products')
       .then(res => res.json())
-      .then(users => this.setState({ users }));
+      .then(products => this.setState({ products }));
   }
 
   render() {
     return (
       <div className="App">
         <h1>Users</h1>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
+        {this.state.products.map(product =>
+          <div key={product._id}>{product.name}</div>
         )}
       </div>
     );

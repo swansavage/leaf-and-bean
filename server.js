@@ -1,13 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
 
-var indexController = require('./controllers/index');
-var usersController = require('./controllers/users');
+const productsController = require('./controllers/products');
+const usersController = require('./controllers/users');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', indexController);
+app.use('/api/products', productsController);
 app.use('/api/users', usersController);
 
 // catch 404 and forward to error handler
@@ -41,6 +42,10 @@ app.use((err, req, res, next)=> {
   res.render('error');
 });
 
+mongoose.connect('mongodb://localhost:27017/leafandbean');
+mongoose.connection.once('open', ()=>{
+    console.log('connected to mongod');
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port);
