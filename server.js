@@ -42,7 +42,9 @@ app.use((err, req, res, next)=> {
   res.render('error');
 });
 
-mongoose.connect('mongodb://localhost:27017/leafandbean');
+const mongoUri =  process.env.MONGODB_URI || 'mongodb://localhost:27017/leafandbean';
+mongoose.connect(mongoUri);
+
 mongoose.connection.once('open', ()=>{
     console.log('connected to mongod');
 });
