@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Users</h1>
+        <h1>Products</h1>
         {this.state.products.map(product =>
           <div key={product._id}>{product.name}</div>
         )}
