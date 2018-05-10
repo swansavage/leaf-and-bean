@@ -256,7 +256,7 @@ class Product extends Component {
                         {this.props.product.qty ? <p className="qty">{this.props.product.qty} in stock</p> : <p className="qty">Out of stock</p>}
                         <p className="price">Price: ${this.props.product.price}</p>
 
-                        <div className="buttons-container">
+                        <div className="btn-container">
                             <button
                                 className="siimple-btn siimple-btn--navy edit"
                                 onClick={()=>{ this.props.toggleState('productIsVisible', 'editProductIsVisible')
@@ -284,8 +284,8 @@ class ProductsList extends Component {
 
     render(){
         console.log(this.props);
-        return  <div>
-                    <h2 className="siimple-h2">Products</h2>
+        return  <div className="products-list">
+                    <h2 className="siimple-h2">Shop</h2>
                     <div className="scroll-wrapper">
                         {this.props.products.map(product => {
 
@@ -295,7 +295,7 @@ class ProductsList extends Component {
                                             src={product.img}
                                             onClick={()=>
                                             {this.props.getProduct(product); this.props.toggleState('productsListIsVisible', 'productIsVisible')}}/>
-                                        <h5 className="siimple-h5">${product.price}</h5>
+                                        <h5 className="siimple-h5 price">Price: ${product.price}</h5>
                                     </div>
                         })}
 
@@ -416,7 +416,7 @@ class Products extends Component {
           return updatedProduct.json()
       })
       .then(jsonedProduct => {
-          
+
           this.setState({
               product: product
           })
@@ -428,11 +428,11 @@ class Products extends Component {
 
 
   render(){
-      return   <div>
+      return   <div className="main">
 
                 {this.state.productsListIsVisible ?
                     <button
-                        className="siimple-btn siimple-btn--navy"
+                        className="siimple-btn siimple-btn--navy add"
                         onClick={()=>this.toggleState('addProductIsVisible', 'productsListIsVisible')}
                         >Add a Product
                     </button> : ''
@@ -440,6 +440,7 @@ class Products extends Component {
 
                 {this.state.productsListIsVisible ?
                     <ProductsList
+                        className="ProductsList"
                         getProducts={this.getProducts}
                         toggleState={this.toggleState}
                         products={this.state.products}
@@ -483,13 +484,42 @@ class Products extends Component {
 
 class Header extends Component {
     render() {
-        return <div className="section">
-              <div className="hero-image">
-              <div className="hero-text">
-                  <h1 className="title siimple-h1">Leaf and Bean</h1>
-              </div>
-              </div>
-              </div>
+        return  <div className="hero-content">
+                        <video autoPlay loop muted className="hero-video">
+                            <source src="videos/Nicole-Coffee-Cinemagraph.mp4" type="video/mp4"/>
+                        </video>
+                        <div className="hero-text">
+                          <h1 className="title siimple-h1">Leaf and Bean</h1>
+                      </div>
+                  </div>
+
+
+    }
+}
+
+class About extends Component {
+    render(){
+        return   <div className="about">
+                    <h2 className="siimple-h2">Our Premium Coffees and Teas</h2>
+                    <p> Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec sed odio dui.</p>
+
+                    <p>Donec sed odio dui. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum.Maecenas faucibus mollis interdum. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida at eget metus.</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod. Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Vestibulum id ligula porta felis euismod semper. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                </div>
+    }
+}
+
+class Footer extends Component {
+    render() {
+        return       <footer>
+
+                            <p>Created by Shaun Savage</p>
+
+
+                            <p>Photo credit: <a href="https://burst.shopify.com/">Burst by Shopify</a></p>
+
+                    </footer>
     }
 }
 class App extends Component {
@@ -497,8 +527,11 @@ class App extends Component {
           return (
                 <div className="App">
                     <Header />
-                    <Products />
-
+                    <div className="main-content">
+                        <About />
+                        <Products />
+                    </div>
+                    <Footer />
                 </div>
           )
 
