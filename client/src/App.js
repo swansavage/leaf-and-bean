@@ -15,7 +15,8 @@ class ProductForm extends Component {
             description: '',
             img: '',
             price: 0,
-            qty: 0
+            qty: 0,
+
         }
     }
     componentDidMount(){
@@ -26,7 +27,8 @@ class ProductForm extends Component {
                 description: this.props.product.description,
                 img: this.props.product.img,
                 price: this.props.product.price,
-                qty: this.props.product.qty
+                qty: this.props.product.qty,
+
             })
         }
     }
@@ -143,7 +145,8 @@ class  EditProductForm extends Component {
                 description: this.props.product.description,
                 img: this.props.product.img,
                 price: this.props.product.price,
-                qty: this.props.product.qty
+                qty: this.props.product.qty,
+                _id: this.props.product._id
             })
         }
     }
@@ -223,7 +226,7 @@ class  EditProductForm extends Component {
                         </div>
 
                         <div className="btn-container">
-                            <button type="submit" className="siimple-btn siimple-btn--navy">Submit</button>
+                            <input className="siimple-btn siimple-btn--navy" type="submit"/>
 
                             <button
                                 className="siimple-btn siimple-btn--grey"
@@ -240,7 +243,6 @@ class  EditProductForm extends Component {
 class Product extends Component {
 
     render(){
-        console.log(this.props);
         return  <div>
                     <button className="siimple-close" onClick={()=>this.props.toggleState('productIsVisible', 'productsListIsVisible')}></button>
 
@@ -264,7 +266,7 @@ class Product extends Component {
                             <button
                                 className="siimple-btn siimple-btn--grey remove"
                                 onClick={()=>
-                                    {this.props.deleteProduct(this.props.product); this.props.toggleState('productIsVisible', 'productListIsVisible')}}
+                                     {this.props.deleteProduct(this.props.product); this.props.toggleState('productIsVisible', 'productsListIsVisible')}}
                             >Delete</button>
                         </div>
                     </div>
@@ -343,11 +345,11 @@ class Products extends Component {
             method: 'DELETE'
         })
         .then(data => {
-
+            let index
             for (let i = 0; i < this.state.products.length; i++) {
                 console.log(this.state.products[i]);
                 if (this.state.products[i]._id == product._id) {
-                    let index = this.state.products[i]
+                    index = this.state.products[i]
                 }
             }
             this.setState({
@@ -361,6 +363,7 @@ class Products extends Component {
   }
 
   getProduct(product){
+      console.log('from product:', product);
       this.setState({
           product: product,
 
@@ -398,6 +401,8 @@ class Products extends Component {
   }
 
   handleUpdateSubmit(product){
+      console.log(product._id);
+      console.log('hello!');
       fetch('/api/products/' + product._id, {
           method: 'PUT',
           body: JSON.stringify(product),
@@ -407,11 +412,15 @@ class Products extends Component {
           }
       })
       .then(updatedProduct => {
+
           return updatedProduct.json()
       })
       .then(jsonedProduct => {
-          this.getProducts()
-          this.toggleState('productsListIsVisible', 'editProductIsVisible')
+          
+          this.setState({
+              product: product
+          })
+          this.toggleState('editProductIsVisible', 'productIsVisible')
       })
       .catch(error => console.log(error))
   }
