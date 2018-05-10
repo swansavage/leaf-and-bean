@@ -238,7 +238,9 @@ class  EditProductForm extends Component {
 }
 
 class Product extends Component {
+
     render(){
+        console.log(this.props);
         return  <div>
                     <button className="siimple-close" onClick={()=>this.props.toggleState('productIsVisible', 'productsListIsVisible')}></button>
 
@@ -261,7 +263,8 @@ class Product extends Component {
 
                             <button
                                 className="siimple-btn siimple-btn--grey remove"
-                                onClick={()=>{ this.props.deleteProduct(this.props.product)}}
+                                onClick={()=>
+                                    {this.props.deleteProduct(this.props.product); this.props.toggleState('productIsVisible', 'productListIsVisible')}}
                             >Delete</button>
                         </div>
                     </div>
@@ -269,8 +272,16 @@ class Product extends Component {
     }
 }
 class ProductsList extends Component {
+    constructor(props){
+        super(props)
+    }
+
+    componentDidMount() {
+        this.props.getProducts();
+    }
 
     render(){
+        console.log(this.props);
         return  <div>
                     <h2 className="siimple-h2">Products</h2>
                     <div className="scroll-wrapper">
@@ -300,10 +311,11 @@ class Products extends Component {
             productIsVisible: false,
             editProductIsVisible: false,
             products: [],
-            product: {}
+            product: {},
         }
         this.deleteProduct = this.deleteProduct.bind(this)
         this.getProduct = this.getProduct.bind(this)
+        this.getProducts = this.getProducts.bind(this)
         this.toggleState = this.toggleState.bind(this)
         this.handleCreate = this.handleCreate.bind(this)
         this.handleCreateSubmit = this.handleCreateSubmit.bind(this)
@@ -331,6 +343,13 @@ class Products extends Component {
             method: 'DELETE'
         })
         .then(data => {
+
+            for (let i = 0; i < this.state.products.length; i++) {
+                console.log(this.state.products[i]);
+                if (this.state.products[i]._id == product._id) {
+                    let index = this.state.products[i]
+                }
+            }
             this.setState({
                 products: [
                     ...this.state.products.slice(0, index),
@@ -338,10 +357,15 @@ class Products extends Component {
                 ]
             })
         })
+        console.log(this.state);
   }
 
   getProduct(product){
-      this.setState({product: product})
+      this.setState({
+          product: product,
+
+        })
+
   }
 
   toggleState(st1, st2){
@@ -407,6 +431,7 @@ class Products extends Component {
 
                 {this.state.productsListIsVisible ?
                     <ProductsList
+                        getProducts={this.getProducts}
                         toggleState={this.toggleState}
                         products={this.state.products}
                         getProduct={this.getProduct}
@@ -420,7 +445,7 @@ class Products extends Component {
                     <ProductForm
                         toggleState={this.toggleState}
                         handleCreate={this.handleCreate}
-                        handleSubmit={this.handleSubmit}
+                        handleSubmit={this.handleCreateSubmit}
                     /> : ''
                 }
 
@@ -428,6 +453,7 @@ class Products extends Component {
                     <Product
                         toggleState={this.toggleState}
                         product={this.state.product}
+                        products={this.state.products}
                         getProduct={this.getProduct}
                         deleteProduct={this.deleteProduct}
                     /> : ''
